@@ -1,0 +1,30 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    Welcome to your new Silex Application!
+
+    {{ form(sql) }}
+
+    <h1>Members</h1>
+    <ul>
+
+            {% for key, user in people %}
+                    <li>
+                        {{ key }}
+                    <ul>
+                        {% for key, attr in user %}
+                            <li>
+                                {{ key }}: {{ attr }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    </li>
+            {% endfor %}
+    </ul>
+
+    </table>
+
+
+
+{% endblock %}
