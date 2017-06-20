@@ -6,13 +6,14 @@
     {{ form(sql) }}
 
     <h1>Members</h1>
+    {% if items is defined %}
     <ul>
 
-            {% for key, user in people %}
+            {% for key, item in items %}
                     <li>
                         {{ key }}
                     <ul>
-                        {% for key, attr in user %}
+                        {% for key, attr in item %}
                             <li>
                                 {{ key }}: {{ attr }}
                             </li>
@@ -22,8 +23,7 @@
                     </li>
             {% endfor %}
     </ul>
-
-    </table>
+    {% endif %}
 
 
 
