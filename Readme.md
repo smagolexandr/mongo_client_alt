@@ -7,8 +7,13 @@ Requirements:
 
   - PHP 7
   - MongoDB 3.4
-
-Also you need to set DB options in /config/db.ini
+ 
+Also you need to rename and set DB options /config/db.ini.dist
+You can use dockerized db, just execute:
+```sh
+docker-compose up
+```
+default connection mongodb://127.0.0.1:27017
 
 The query must be like this:
 >SELECT [<Projections>] [FROM <Target>] [WHERE <Condition>*] [GROUP BY <Field>*] [ORDER BY <Fields>* [ASC|DESC] *] [SKIP <SkipRecords>] [LIMIT <MaxRecords>]
@@ -17,8 +22,4 @@ Available conditions for where:
   ```sh
   <, >, <=, >=, =, <>
   ```
-Use next command to fill db
-```sh
-use test
-db.people.insertMany([{name: "Olexandr", age: 20, status: "coding"}, {name: "Anastasia", age: 27, status: "waiting"}, {name: "Fred", age:34, status: "chilling"}])
-```
+
