@@ -16,7 +16,7 @@ docker-compose up
 default connection mongodb://127.0.0.1:27017
 
 The query must be like this:
->SELECT [<Projections>] [FROM <Target>] [WHERE <Condition>*] [GROUP BY <Field>*] [ORDER BY <Fields>* [ASC|DESC] *] [SKIP <SkipRecords>] [LIMIT <MaxRecords>]
+>SELECT [ Projections ] [FROM <Target>] [WHERE <Condition>*] [GROUP BY <Field>*] [ORDER BY <Field>* [ASC|DESC] *] [OFFSET <SkipRecords>] [LIMIT <MaxRecords>]
 
 Available conditions for where:
   ```sh
