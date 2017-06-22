@@ -16,7 +16,7 @@ before_script:
     - composer self-update
     - composer install
     - mongo test --eval 'db.addUser("travis", "test");'
-    - mongo test --eval "db.poeple.insertMane([{name:'Olexandr', age:20, status:'coding'}, {name:'Anastasia', age:27, status:'waiting'}, {name:'Fred', age:34, status:'chilling'}]);"
+    - mongo test --eval "db.poeple.insertMany([{name:'Olexandr', age:20, status:'coding'}, {name:'Anastasia', age:27, status:'waiting'}, {name:'Fred', age:34, status:'chilling'}]);"
 
 script:
   - if [ "$TARGET" = "phpmd" ];   then bin/phpmd ./src text ./.phpmd-ruleset.xml; fi
