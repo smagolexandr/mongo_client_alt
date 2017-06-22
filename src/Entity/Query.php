@@ -2,18 +2,68 @@
 
 namespace App\Entity;
 
+/**
+ * Class Query
+ * @SuppressWarnings(PHPMD)
+ */
 class Query
 {
+    /**
+     * @const Array
+     */
     const OPERATORS =  ['select', 'from', 'where', 'order by', 'limit', 'offset'];
+
+    /**
+     * Input sql query as string
+     *
+     * @var string
+     */
     private $query;
+
+    /**
+     * Selected projections
+     *
+     * @var array
+     */
     private $projections;
+
+    /**
+     * Table name
+     *
+     * @var string
+     */
     private $table;
+
+    /**
+     * @var int
+     */
     private $limit;
+
+    /**
+     * Array formatted to mosql
+     *
+     * @var array
+     */
     private $where;
+
+    /**
+     * @var int
+     */
     private $offset;
+
+    /**
+     * Array in format [ 'field' => 'ASC' ]
+     *
+     * @var array
+     */
     private $order;
 
 
+    /**
+     * Query constructor.
+     *
+     * @param $exp string SQL expression
+     */
     function __construct($exp)
     {
         $this->query = strtolower($exp);
@@ -29,55 +79,60 @@ class Query
         foreach ($operators as $operator => $start) {
             $next = next($operators);
             switch ($operator) {
-                case "select":
-                    $projections_string = $this->getOperatorContent($this->query, $operator, $start, $next);
-                    if ($projections_string == "*") {
-                        $this->projections = null;
+            case "select":
+                $projectionsString = $this->getOperatorContent($this->query, $operator, $start, $next);
+                if ($projectionsString == "*") {
+                    $this->projections = null;
+                } else {
+                    $this->projections = array_fill_keys(
+                        array_map(
+                            'trim', explode(
+                                ",", $projectionsString
+                            )
+                        ),
+                        1
+                    );
+                    if (strpos($this->query, "_id")) {
+                        $projections["_id"] = 1;
                     } else {
-                        $this->projections = array_fill_keys(array_map('trim', explode(
-                            ",", $projections_string)),
-                            1);
-                        if (strpos($this->query, "_id")) {
-                            $projections["_id"] = 1;
-                        } else {
-                            $projections["_id"] = 0;
-                        }
+                        $projections["_id"] = 0;
                     }
-                    break;
+                }
+                break;
 
-                case "from":
-                    $this->table = $this->getOperatorContent($this->query, $operator, $start, $next);
+            case "from":
+                $this->table = $this->getOperatorContent($this->query, $operator, $start, $next);
 
-                    break;
+                break;
 
-                case "limit":
-                    $this->limit = intval($this->getOperatorContent($this->query, $operator, $start, $next));
-                    break;
+            case "limit":
+                $this->limit = intval($this->getOperatorContent($this->query, $operator, $start, $next));
+                break;
 
-                case "offset":
-                    $this->offset = intval($this->getOperatorContent($this->query, $operator, $start, $next));
-                    break;
+            case "offset":
+                $this->offset = intval($this->getOperatorContent($this->query, $operator, $start, $next));
+                break;
 
-                case "where":
-                    $where_str = $this->getOperatorContent($exp, $operator, $start, $next);
-                    $parser = new ConditionParser();
-                    $this->where = $parser->parse($where_str);
-                    break;
+            case "where":
+                $whereStr = $this->getOperatorContent($exp, $operator, $start, $next);
+                $parser = new ConditionParser();
+                $this->where = $parser->parse($whereStr);
+                break;
 
-                case "order by":
-                    $exp = explode(' ', $this->getOperatorContent($exp, $operator, $start, $next));
+            case "order by":
+                $exp = explode(' ', $this->_getOperatorContent($exp, $operator, $start, $next));
 
-                    if (count($exp) != 2) {
-                        return false;
-                    }
-                    $orderField = $exp[0];
-                    $orderDirection = strtoupper($exp[1]);
+                if (count($exp) != 2) {
+                    return false;
+                }
+                $orderField = $exp[0];
+                $orderDirection = strtoupper($exp[1]);
 
-                    if (!in_array($orderDirection, ['ASC', 'DESC'])) {
-                        return false;
-                    }
-                    $this->order = [$orderField => ($orderDirection == 'ASC' ? 1 : -1)];
-                    break;
+                if (!in_array($orderDirection, ['ASC', 'DESC'])) {
+                    return false;
+                }
+                $this->order = [$orderField => ($orderDirection == 'ASC' ? 1 : -1)];
+                break;
 
             }
         }
@@ -85,10 +140,17 @@ class Query
         return $this;
     }
 
-    public function execute($mongodb){
+    /**
+     * instance of DB
+     *
+     * @param  $mongodb object
+     * @return array
+     */
+    public function execute($mongodb)
+    {
         if (isset($this->table)) {
                 $collection = $mongodb->test->{$this->table};
-            }
+        }
 
             $items = [];
 
@@ -101,17 +163,32 @@ class Query
                 ]
             );
 
-            foreach ($cursor as $document) {
-                array_push($items, $document);
-            }
+        foreach ($cursor as $document) {
+            array_push($items, $document);
+        }
 
             return $items;
     }
 
-    private function getOperatorContent($exp, $operator, $start, $next){
-        return trim(substr($exp,
-            $start + strlen($operator),
-            $next == false ? strlen($exp) : $next - ($start + strlen($operator))));
+    /**
+     * Returns string with content between 2 operators
+     *
+     * @param string $exp      SQL expression
+     * @param string $operator name of current operator
+     * @param int    $start    start position of current operator
+     * @param int    $next     start position of next operator
+     *
+     * @return string
+     */
+    private function getOperatorContent($exp, $operator, $start, $next)
+    {
+        return trim(
+            substr(
+                $exp,
+                $start + strlen($operator),
+                $next == false ? strlen($exp) : $next - ($start + strlen($operator))
+            )
+        );
     }
     /**
      * @return mixed

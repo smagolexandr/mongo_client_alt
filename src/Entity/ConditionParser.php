@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+/**
+ * Class ConditionParser
+ * @SuppressWarnings(PHPMD)
+ */
 class ConditionParser
 {
     /**
@@ -47,7 +51,7 @@ class ConditionParser
     }
     /**
      * @param string $subcondition
-     * @param bool $oposit
+     * @param bool   $oposit
      * @return array
      */
     private function splitSubCondition($subcondition, $oposit)
