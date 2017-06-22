@@ -15,9 +15,8 @@ before_script:
     - pecl -q install mongodb && echo "extension=mongodb.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
     - composer self-update
     - composer install
-    - mongo mydb_test --eval 'db.addUser("travis", "test");'
-    - mongo mydb_test --eval 'use test;'
-    - mongo mydb_test --eval "db.poeple.insertMane([{name:'Olexandr', age:20, status:'coding'}, {name:'Anastasia', age:27, status:'waiting'}, {name:'Fred', age:34, status:'chilling'}]);"
+    - mongo test --eval 'db.addUser("travis", "test");'
+    - mongo test --eval "db.poeple.insertMane([{name:'Olexandr', age:20, status:'coding'}, {name:'Anastasia', age:27, status:'waiting'}, {name:'Fred', age:34, status:'chilling'}]);"
 
 script:
   - if [ "$TARGET" = "phpmd" ];   then bin/phpmd ./src text ./.phpmd-ruleset.xml; fi
