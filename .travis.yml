@@ -1,6 +1,5 @@
 language: php
-services:
-  - mongodb
+services: mongodb
 
 matrix:
   fast_finish: true
@@ -13,6 +12,7 @@ matrix:
       env: TARGET=phpunit
 
 before_script:
+    - pecl -q install mongo && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
     - composer self-update
     - composer install
     - mongo mydb_test --eval 'db.addUser("travis", "test");'
