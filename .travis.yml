@@ -16,7 +16,8 @@ before_script:
     - composer self-update
     - composer install
     - mongo mydb_test --eval 'db.addUser("travis", "test");'
-    - mongo mydb_test --eval "db.people.insertMany([{name: 'Olexandr', age: 20, status: 'coding'}, {name: 'Anastasia', age: 27, status: 'waiting'}, {name: 'Fred', age:34, status: 'chilling'}]);"
+    - mongo mydb_test --eval 'use test'
+    - mongo mydb_test --eval 'db.people.insertMany([{name: 'Olexandr', age: 20, status: 'coding'}, {name: 'Anastasia', age: 27, status: 'waiting'}, {name: 'Fred', age:34, status: 'chilling'}]);'
 #    - if [ "$TARGET" = "phpunit" ]; then ./install.sh; fi
 
 script:
