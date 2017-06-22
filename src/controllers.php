@@ -14,9 +14,8 @@ $app->match('/', function (Request $request) use ($app) {
     $form = $app['form.factory']->createBuilder(FormType::class, $data)
     ->add(
         'sql',
-        null, [
-        'label' => false
-        ]
+        null,
+        ['label' => false]
     )
     ->getForm();
 
