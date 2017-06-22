@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Olexandr",
+    "email": "smagolexandr@gmail.com",
+    "age": 20,
+    "status": "coding"
+  },
+  {
+    "name": "Anastasia",
+    "email": "jford@gmail.com",
+    "age": 26,
+    "status": "waiting"
+  },
+  {
+    "name": "Fred",
+    "email": "jqwdqwford@gmail.com",
+    "age": 34,
+    "status": "chilling"
+  }
+]
