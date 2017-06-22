@@ -1,6 +1,6 @@
 {
     "name": "fabpot/silex-skeleton",
-    "description": "A pre-configured skeleton for the Silex microframework",
+    "description": "SQL select query to mongo Silex app",
     "license": "MIT",
     "type": "project",
     "require": {
