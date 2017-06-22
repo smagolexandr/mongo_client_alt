@@ -33,6 +33,7 @@ $app->match('/', function (Request $request) use ($app) {
         }
     }
 
+
     return $app['twig']->render('index.html.twig', $response);
 })
     ->method('GET|POST')

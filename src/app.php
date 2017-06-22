@@ -25,6 +25,7 @@ $db = parse_ini_file(__DIR__.'/../config/db.ini');
 if (!isset($db['host']) && !isset($db['port'])) {
     return false;
 }
+
 $app->register(
     new MongoDBServiceProvider(), [
     'mongodb.config' => [
