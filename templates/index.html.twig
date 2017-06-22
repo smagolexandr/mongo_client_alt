@@ -1,34 +1,29 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-
     <div class="container">
-        <!-- Top Navigation -->
-        <header class="codrops-header">
-            <h1>SQL to Mongo
-                {#<span></span>#}
-            </h1>
-        </header>
-        <section>
-                {{ form_start(sql, {'attr': {'class' : 'simform', 'id': 'theForm'}}) }}
-                <div class="simform-inner">
-                    <label>
-                        Type sql code here
-                    </label>
+    <!-- Top Navigation -->
+    <header class="codrops-header">
+        <h1>SQL to Mongo
+            {#<span></span>#}
+        </h1>
+    </header>
+    <section>
+        {{ form_start(sql, {'attr': {'class' : 'simform'}}) }}
+        <div class="simform-inner">
+            <label>
+                Type sql code here
+            </label>
+            {{ form_widget(sql.sql) }}
+            <div class="controls">
+                <button type="submit" class="next"></button>
+                <div class="progress"></div>
+            </div><!-- / controls -->
+        </div><!-- /simform-inner -->
+        {{ form_end(sql) }}
+    </section>
 
-
-                    {{ form_widget(sql.sql) }}
-
-                    <div class="controls">
-                        <button type="submit" class="next"></button>
-                        <div class="progress"></div>
-                    </div><!-- / controls -->
-                </div><!-- /simform-inner -->
-
-                {{ form_end(sql) }}
-        </section>
-
-        {% if items is defined %}
+    {% if items is defined %}
         <section>
             <!--for demo wrap-->
             <h1>{{ table | capitalize }}</h1>
@@ -59,9 +54,6 @@
                 </table>
             </div>
         </section>
-
-    </div><!-- /container -->
-
+        </div><!-- /container -->
     {% endif %}
-
 {% endblock %}
