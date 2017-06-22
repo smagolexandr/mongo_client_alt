@@ -1,4 +1,4 @@
-# SQL select query to Mongo
+# SQL select query to Mongo [![Build Status](https://travis-ci.org/smagolexandr/mongo_client_alt.svg?branch=master)](https://travis-ci.org/smagolexandr/mongo_client_alt)
 Install project with
 ```sh
 composer install
