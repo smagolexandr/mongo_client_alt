@@ -19,6 +19,6 @@ before_script:
 #    - if [ "$TARGET" = "phpunit" ]; then ./install.sh; fi
 
 script:
-  - if [ "$TARGET" = "phpunit" ]; then bin/phpunit --coverage-clover=coverage.clover; fi
   - if [ "$TARGET" = "phpmd" ];   then bin/phpmd ./src text ./.phpmd-ruleset.xml; fi
-  - if [ "$TARGET" = "phpcs" ];   then bin/phpcs ./src --standard=PSR2 --extensions=php -p; fi
+  - if [ "$TARGET" = "phpcs" ];   then bin/phpcs ./src/controllers.php --standard=PSR2 --extensions=php -p; fi
+  - if [ "$TARGET" = "phpcs" ];   then bin/phpcs ./src/Entity --standard=PSR2 --extensions=php -p; fi

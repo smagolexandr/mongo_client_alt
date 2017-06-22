@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+/**
+ * Class ConditionParser
+ * @SuppressWarnings(PHPMD)
+ */
 class ConditionParser
 {
     /**
@@ -10,7 +14,6 @@ class ConditionParser
      */
     public function parse($expression)
     {
-//        $conditionString = implode(' ', $expression);
         $conditionString = $expression;
         $result = $this->splitConditions($conditionString);
         if ($this->isXor($result)) {
@@ -21,22 +24,22 @@ class ConditionParser
     }
     /**
      * @param string $conditionQuery
-     * @param bool $doOposit
+     * @param bool   $doOposit
      * @return array
      */
     private function splitConditions($conditionQuery, $doOposit = false)
     {
         $result = [];
         if (strpos($conditionQuery, ' XOR ') !== false) {
-            foreach (explode(' XOR ' , $conditionQuery) as $xorSubcondition) {
+            foreach (explode(' XOR ', $conditionQuery) as $xorSubcondition) {
                 $result['XOR'][] = $this->splitConditions($xorSubcondition, $doOposit);
             }
         } elseif (strpos($conditionQuery, ' OR ') !== false) {
-            foreach (explode(' OR ' , $conditionQuery) as $orSubcondition) {
+            foreach (explode(' OR ', $conditionQuery) as $orSubcondition) {
                 $result['$or'][] = $this->splitConditions($orSubcondition, $doOposit);
             }
         } elseif (strpos($conditionQuery, ' AND ') !== false) {
-            foreach (explode(' AND ' , $conditionQuery) as $andSubcondition) {
+            foreach (explode(' AND ', $conditionQuery) as $andSubcondition) {
                 $splited = $this->splitConditions($andSubcondition, $doOposit);
                 $field = array_keys($splited)[0];
                 $result[$field] = $splited[$field];
@@ -48,7 +51,7 @@ class ConditionParser
     }
     /**
      * @param string $subcondition
-     * @param bool $oposit
+     * @param bool   $oposit
      * @return array
      */
     private function splitSubCondition($subcondition, $oposit)
@@ -56,7 +59,7 @@ class ConditionParser
         $result = [];
         foreach ($this->getOperationsMapping() as $mongoOperator => $sqlOperator) {
             if (strpos($subcondition, " {$sqlOperator} ") !== false) {
-                list($field, $value) = explode(" {$sqlOperator} " , $subcondition);
+                list($field, $value) = explode(" {$sqlOperator} ", $subcondition);
                 $field = trim($field, "'\"`()");
                 $value = trim($value, "'\"`()");
                 if (is_numeric($value)) {
