@@ -1,30 +1,67 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-    Welcome to your new Silex Application!
 
-    {{ form(sql) }}
+    <div class="container">
+        <!-- Top Navigation -->
+        <header class="codrops-header">
+            <h1>SQL to Mongo
+                {#<span></span>#}
+            </h1>
+        </header>
+        <section>
+                {{ form_start(sql, {'attr': {'class' : 'simform', 'id': 'theForm'}}) }}
+                <div class="simform-inner">
+                    <label>
+                        Type sql code here
+                    </label>
 
-    <h1>Members</h1>
-    {% if items is defined %}
-    <ul>
 
-            {% for key, item in items %}
-                    <li>
-                        {{ key }}
-                    <ul>
-                        {% for key, attr in item %}
-                            <li>
-                                {{ key }}: {{ attr }}
-                            </li>
+                    {{ form_widget(sql.sql) }}
+
+                    <div class="controls">
+                        <button type="submit" class="next"></button>
+                        <div class="progress"></div>
+                    </div><!-- / controls -->
+                </div><!-- /simform-inner -->
+
+                {{ form_end(sql) }}
+        </section>
+
+        {% if items is defined %}
+        <section>
+            <!--for demo wrap-->
+            <h1>{{ table | capitalize }}</h1>
+            <div class="tbl-header">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                    <tr>
+                        {% for key, field in items[0] %}
+                            <th>
+                                {{ key }}
+                            </th>
                         {% endfor %}
-                    </ul>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                    {% for key, item in items %}
+                        <tr>
+                            {% for value in item %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-                    </li>
-            {% endfor %}
-    </ul>
+    </div><!-- /container -->
+
     {% endif %}
-
-
 
 {% endblock %}
