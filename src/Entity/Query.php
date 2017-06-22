@@ -286,6 +286,4 @@ class Query
     {
         $this->order = $order;
     }
-
-
 }
