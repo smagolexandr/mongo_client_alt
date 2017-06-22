@@ -1,0 +1,225 @@
+.container {
+    margin-right: auto;
+    margin-left: auto;
+}
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+
+.codrops-header {
+    margin: 0 auto;
+    padding-top: 20px;
+    text-align: center;
+    color: white;
+}
+
+.codrops-header h1 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 2.5em;
+}
+
+.codrops-header h1 span {
+    display: block;
+    padding: 0 0 0.6em 0.1em;
+    font-size: 0.6em;
+    opacity: 0.7;
+}
+/*---------------------Table---------------------*/
+table{
+    width:100%;
+    table-layout: fixed;
+}
+.tbl-header{
+    background-color: rgba(255,255,255,0.3);
+}
+.tbl-content{
+    height:300px;
+    overflow-x:auto;
+    margin-top: 0px;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+th{
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+}
+td{
+    padding: 15px;
+    text-align: left;
+    vertical-align:middle;
+    font-weight: 300;
+    font-size: 12px;
+    color: #fff;
+    border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+
+/*!* demo styles *!*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+body{
+    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+    background: linear-gradient(to right, #25c481, #25b7c4);
+    font-family: 'Roboto', sans-serif;
+    color: white
+}
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+/*---------------------Form---------------------*/
+@font-face {
+    font-weight: normal;
+    font-style: normal;
+    font-family: 'icomoon';
+    src:url('../fonts/icomoon/icomoon.eot?-9heso');
+    src:url('../fonts/icomoon/icomoon.eot?#iefix-9heso') format('embedded-opentype'),
+    url('../fonts/icomoon/icomoon.woff?-9heso') format('woff'),
+    url('../fonts/icomoon/icomoon.ttf?-9heso') format('truetype'),
+    url('../fonts/icomoon/icomoon.svg?-9heso#icomoon') format('svg');
+}
+
+.simform {
+    position: relative;
+    margin: 0 auto;
+    padding: 2em 0;
+    width: 100%;
+    text-align: left;
+    font-size: 2.5em;
+}
+
+/* Input field */
+.simform-inner input {
+    display: block;
+    margin: 0.3em 0 0 0;
+    padding: 0.5em 1em 0.5em 0.7em;
+    width: calc(100% - 2em);
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 1em;
+    line-height: 1;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+
+.simform-inner input,
+.no-js .simform-inner input {
+    opacity: 1;
+}
+
+.simform-inner input:focus,
+.simform button:focus {
+    outline: none;
+}
+
+/* Next question button */
+.next {
+    position: absolute;
+    right: 0;
+    bottom: 2.15em; /* padding-bottom of form plus progress bar height */
+    display: block;
+    padding: 0;
+    width: 2em;
+    height: 2em;
+    border: none;
+    background: none;
+    color: rgba(0,0,0,0.4);
+    text-align: center;
+    z-index: 100;
+    cursor: pointer;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.next:hover {
+    color: rgba(0,0,0,0.5);
+}
+
+.next::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "\e600";
+    text-transform: none;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-family: 'icomoon';
+    line-height: 2;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.simform-inner input:focus .next.show {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+
+/* Progress bar */
+.simform .progress {
+    width: 0%;
+    height: 0.15em;
+    background: rgba(0,0,0,0.3);
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.simform .progress::before {
+    position: absolute;
+    top: auto;
+    width: 100%;
+    height: inherit;
+    background: rgba(0,0,0,0.05);
+    content: '';
+}
+
+/* Remove IE clear cross */
+input[type=text]::-ms-clear {
+    display: none;
+}
+
+/* Adjust form for smaller screens */
+@media screen and (max-width: 44.75em) {
+    .simform {
+        font-size: 1.8em;
+    }
+}
+
+@media screen and (max-width: 33.5625em) {
+    .simform {
+        font-size: 1.2em;
+    }
+}

@@ -1,0 +1,23 @@
+language: php
+services: mongodb
+
+matrix:
+  fast_finish: true
+  include:
+    - php: '7.1'
+      env: TARGET=phpcs
+    - php: '7.1'
+      env: TARGET=phpmd
+    - php: '7.1'
+      env: TARGET=phpunit
+
+before_script:
+    - pecl -q install mongodb && echo "extension=mongodb.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+    - composer self-update
+    - composer install
+    - mongo test --eval 'db.addUser("travis", "test");'
+
+script:
+  - if [ "$TARGET" = "phpmd" ];   then bin/phpmd ./src text ./.phpmd-ruleset.xml; fi
+  - if [ "$TARGET" = "phpcs" ];   then bin/phpcs ./src/controllers.php --standard=PSR2 --extensions=php -p; fi
+  - if [ "$TARGET" = "phpcs" ];   then bin/phpcs ./src/Entity --standard=PSR2 --extensions=php -p; fi
