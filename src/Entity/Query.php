@@ -11,7 +11,7 @@ class Query
     /**
      * @const Array
      */
-    const OPERATORS =  ['select', 'from', 'where', 'order by', 'limit', 'offset'];
+    const OPERATORS = ['select', 'from', 'where', 'order by', 'limit', 'offset'];
 
     /**
      * Input sql query as string
@@ -79,60 +79,60 @@ class Query
         foreach ($operators as $operator => $start) {
             $next = next($operators);
             switch ($operator) {
-            case "select":
-                $projectionsString = $this->getOperatorContent($this->query, $operator, $start, $next);
-                if ($projectionsString == "*") {
-                    $this->projections = null;
-                } else {
-                    $this->projections = array_fill_keys(
-                        array_map(
-                            'trim', explode(
-                                ",", $projectionsString
-                            )
-                        ),
-                        1
-                    );
-                    if (strpos($this->query, "_id")) {
-                        $projections["_id"] = 1;
+                case "select":
+                    $projectionsString = $this->getOperatorContent($this->query, $operator, $start, $next);
+                    if ($projectionsString == "*") {
+                        $this->projections = null;
                     } else {
-                        $projections["_id"] = 0;
+                        $this->projections = array_fill_keys(
+                            array_map(
+                                'trim', explode(
+                                    ",", $projectionsString
+                                )
+                            ),
+                            1
+                        );
+                        if (strpos($this->query, "_id")) {
+                            $projections["_id"] = 1;
+                        } else {
+                            $projections["_id"] = 0;
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case "from":
-                $this->table = $this->getOperatorContent($this->query, $operator, $start, $next);
+                case "from":
+                    $this->table = $this->getOperatorContent($this->query, $operator, $start, $next);
 
-                break;
+                    break;
 
-            case "limit":
-                $this->limit = intval($this->getOperatorContent($this->query, $operator, $start, $next));
-                break;
+                case "limit":
+                    $this->limit = intval($this->getOperatorContent($this->query, $operator, $start, $next));
+                    break;
 
-            case "offset":
-                $this->offset = intval($this->getOperatorContent($this->query, $operator, $start, $next));
-                break;
+                case "offset":
+                    $this->offset = intval($this->getOperatorContent($this->query, $operator, $start, $next));
+                    break;
 
-            case "where":
-                $whereStr = $this->getOperatorContent($exp, $operator, $start, $next);
-                $parser = new ConditionParser();
-                $this->where = $parser->parse($whereStr);
-                break;
+                case "where":
+                    $whereStr = $this->getOperatorContent($exp, $operator, $start, $next);
+                    $parser = new ConditionParser();
+                    $this->where = $parser->parse($whereStr);
+                    break;
 
-            case "order by":
-                $exp = explode(' ', $this->_getOperatorContent($exp, $operator, $start, $next));
+                case "order by":
+                    $exp = explode(' ', $this->_getOperatorContent($exp, $operator, $start, $next));
 
-                if (count($exp) != 2) {
-                    return false;
-                }
-                $orderField = $exp[0];
-                $orderDirection = strtoupper($exp[1]);
+                    if (count($exp) != 2) {
+                        return false;
+                    }
+                    $orderField = $exp[0];
+                    $orderDirection = strtoupper($exp[1]);
 
-                if (!in_array($orderDirection, ['ASC', 'DESC'])) {
-                    return false;
-                }
-                $this->order = [$orderField => ($orderDirection == 'ASC' ? 1 : -1)];
-                break;
+                    if (!in_array($orderDirection, ['ASC', 'DESC'])) {
+                        return false;
+                    }
+                    $this->order = [$orderField => ($orderDirection == 'ASC' ? 1 : -1)];
+                    break;
 
             }
         }
@@ -149,34 +149,34 @@ class Query
     public function execute($mongodb)
     {
         if (isset($this->table)) {
-                $collection = $mongodb->test->{$this->table};
+            $collection = $mongodb->test->{$this->table};
         }
 
-            $items = [];
+        $items = [];
 
-            $cursor = $collection->find(
-                isset($this->where) ? $this->where : [],
-                ['projection' => $this->projections,
-                    "limit" => isset($this->limit) ? $this->limit : null,
-                    "skip" => isset($this->offset) ? $this->offset : null,
-                    "sort" => isset($this->order) ? $this->order : null,
-                ]
-            );
+        $cursor = $collection->find(
+            isset($this->where) ? $this->where : [],
+            ['projection' => $this->projections,
+                "limit" => isset($this->limit) ? $this->limit : null,
+                "skip" => isset($this->offset) ? $this->offset : null,
+                "sort" => isset($this->order) ? $this->order : null,
+            ]
+        );
 
         foreach ($cursor as $document) {
             array_push($items, $document);
         }
 
-            return $items;
+        return $items;
     }
 
     /**
      * Returns string with content between 2 operators
      *
-     * @param string $exp      SQL expression
+     * @param string $exp SQL expression
      * @param string $operator name of current operator
-     * @param int    $start    start position of current operator
-     * @param int    $next     start position of next operator
+     * @param int $start start position of current operator
+     * @param int $next start position of next operator
      *
      * @return string
      */
@@ -190,6 +190,7 @@ class Query
             )
         );
     }
+
     /**
      * @return mixed
      */

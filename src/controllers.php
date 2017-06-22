@@ -5,8 +5,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-$app->match(
-    '/', function (Request $request) use ($app) {
+$app->match('/', function (Request $request) use ($app) {
         $response = [];
         $data = array(
         'sql' => 'select * from people'
@@ -14,7 +13,8 @@ $app->match(
 
         $form = $app['form.factory']->createBuilder(FormType::class, $data)
         ->add(
-            'sql', null, [
+            'sql',
+            null, [
             'label' => false
             ]
         )
