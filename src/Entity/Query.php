@@ -64,7 +64,7 @@ class Query
      *
      * @param $exp string SQL expression
      */
-    function __construct($exp)
+    public function __construct($exp)
     {
         $this->query = strtolower($exp);
 
@@ -86,8 +86,10 @@ class Query
                     } else {
                         $this->projections = array_fill_keys(
                             array_map(
-                                'trim', explode(
-                                    ",", $projectionsString
+                                'trim',
+                                explode(
+                                    ",",
+                                    $projectionsString
                                 )
                             ),
                             1
@@ -132,8 +134,6 @@ class Query
                         return false;
                     }
                     $this->order = [$orderField => ($orderDirection == 'ASC' ? 1 : -1)];
-                    break;
-
             }
         }
 

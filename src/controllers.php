@@ -6,37 +6,36 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $app->match('/', function (Request $request) use ($app) {
-        $response = [];
-        $data = array(
-        'sql' => 'select * from people'
-        );
+    $response = [];
+    $data = array(
+    'sql' => 'select * from people'
+    );
 
-        $form = $app['form.factory']->createBuilder(FormType::class, $data)
-        ->add(
-            'sql',
-            null, [
-            'label' => false
-            ]
-        )
-        ->getForm();
+    $form = $app['form.factory']->createBuilder(FormType::class, $data)
+    ->add(
+        'sql',
+        null, [
+        'label' => false
+        ]
+    )
+    ->getForm();
 
-        $response['sql'] = $form->createView();
+    $response['sql'] = $form->createView();
 
-        $form->handleRequest($request);
+    $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $data = $form->getData();
+    if ($form->isValid()) {
+        $data = $form->getData();
 
-            if (isset($data['sql'])) {
-                $mosql = new Query($data['sql']);
-                $response['table'] = $mosql->getTable();
-                $response['items'] = $mosql->execute($app['mongodb']);
-            }
+        if (isset($data['sql'])) {
+            $mosql = new Query($data['sql']);
+            $response['table'] = $mosql->getTable();
+            $response['items'] = $mosql->execute($app['mongodb']);
         }
-
-        return $app['twig']->render('index.html.twig', $response);
     }
-)
+
+    return $app['twig']->render('index.html.twig', $response);
+})
     ->method('GET|POST')
     ->bind('homepage');
 
