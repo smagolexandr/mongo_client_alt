@@ -1,4 +1,6 @@
 language: php
+services:
+  - mongodb
 
 matrix:
   fast_finish: true
@@ -13,6 +15,7 @@ matrix:
 before_script:
     - composer self-update
     - composer install
+    - mongo mydb_test --eval 'db.addUser("travis", "test");'
 #    - if [ "$TARGET" = "phpunit" ]; then ./install.sh; fi
 
 script:
