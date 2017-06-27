@@ -42,7 +42,7 @@ Configure virtual host. For example:
 ```apache
 <VirtualHost 0.0.0.0:80>
   ServerAdmin me@example.com
-  DocumentRoot /var/www/example
+  DocumentRoot /var/www/example/web
   <Directory /var/www/example/web>
       Options Indexes FollowSymLinks MultiViews
       AllowOverride All
