@@ -1,9 +1,25 @@
 # SQL select query to Mongo [![Build Status](https://travis-ci.org/smagolexandr/mongo_client_alt.svg?branch=master)](https://travis-ci.org/smagolexandr/mongo_client_alt)
 
-### Requirements:
+
+## Requirements:
+
 
   - PHP 7
   - MongoDB 3.4
+  
+
+## Application
+
+
+The query must be like this:
+>SELECT [ Projections ] [FROM Target] [WHERE Condition*] [GROUP BY Field*] [ORDER BY Field* [ASC|DESC] *] [OFFSET SkipRecords] [LIMIT MaxRecords]
+
+Available conditions for where:
+  ```sh
+  <, >, <=, >=, =, <>
+  ```
+
+## Apache configuration
 
 To install application you need apache server with enabled mongodb driver. To Install mongodb driver you need execute:
 ```sh
@@ -39,6 +55,10 @@ Configure virtual host. For example:
 </VirtualHost>
 ```
 
+
+## Project install
+
+
 Go to project folder and install it with:
 ```sh
 cd ~/Sites/mongo_client_alt
@@ -53,22 +73,15 @@ host = 127.0.0.1
 port = 27017
 ```
 
-Also you can use dockerized db, just execute:
+
+## Database
+
+
+Firstly you need to [install MongoDB](https://docs.mongodb.com/manual/installation/), then load fixtures:
 ```sh
-docker-compose up
-```
-default connection mongodb://127.0.0.1:27017
-
-The query must be like this:
->SELECT [ Projections ] [FROM Target] [WHERE Condition*] [GROUP BY Field*] [ORDER BY Field* [ASC|DESC] *] [OFFSET SkipRecords] [LIMIT MaxRecords]
-
-Available conditions for where:
-  ```sh
-  <, >, <=, >=, =, <>
-  ```
-
-For running unit testing you need to use the following fixtures:
-```json
+mongo
+>use test
+>db.people.insertMany(
 [
   {
     "name": "Olexandr",
@@ -89,5 +102,22 @@ For running unit testing you need to use the following fixtures:
     "status": "chilling"
   }
 ]
+);
 ```
 
+Also you can use dockerized db, just execute:
+```sh
+docker-compose up
+```
+default connection mongodb://127.0.0.1:27017
+
+
+## Tests
+
+
+Tests run with:
+```sh
+cd ~/Sites/mongo_client_alt
+bin/phpunit
+```
+P.S. You need to use fixtures that appeared upper.
